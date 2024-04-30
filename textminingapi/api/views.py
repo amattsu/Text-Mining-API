@@ -1,36 +1,47 @@
+import os
+from openai import OpenAI
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from dotenv import load_dotenv
-import os
-import openai
+from rest_framework import status
 
+api_key = os.getenv('OPENAI_API_KEY')
+if not api_key:
+    raise Exception("API key not found. Please set the OPENAI_API_KEY environment variable.")
+
+client = OpenAI(api_key=api_key)
 
 @api_view(['POST'])
 def text_mining(request):
     text = request.data.get('text', '')
-    openai.api_key = os.getenv('OPENAI_API_KEY')
 
-    response_info = openai.Completion.create(
-        engine="gpt-3.5-turbo",
-        prompt=f"Identify and extract important names, dates, places from the following text: {text}",
-        max_tokens=150
-    )
+    try:
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": "Extract key names, dates, places, determine sentiment, and summarize the text."},
+                {"role": "user", "content": text}
+            ],
+            model="gpt-3.5-turbo",
+            max_tokens=500
+        )
 
-    response_sentiment = openai.Completion.create(
-        engine="gpt-3.5-turbo",
-        prompt=f"Determine the sentiment of the following text: {text}",
-        max_tokens=60
-    )
+        if chat_completion['choices']:
+            response_text = chat_completion['choices'][0]['message']['content']
+        else:
+            response_text = "No response generated."
 
-    response_summary = openai.Completion.create(
-        engine="gpt-3.5-turbo",
-        prompt=f"Summarize the following text: {text}",
-        max_tokens=100
-    )
+        # Determining the answer into parts for a single result
+        results = response_text.strip().split('\n')
+        if len(results) >= 3:
+            extracted_info, sentiment, summary = results[0], results[1], results[2]
+        else:
+            extracted_info = sentiment = summary = "Insufficient data to extract all responses."
 
-    return Response({
-        'extracted_info': response_info.choices[0].text.strip(),
-        'sentiment': response_sentiment.choices[0].text.strip(),
-        'summary': response_summary.choices[0].text.strip()
-    })
+        return Response({
+            'extracted_info': extracted_info,
+            'sentiment': sentiment,
+            'summary': summary
+        })
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

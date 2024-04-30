@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d96072a3-0f0a-46ba-b5d5-9abfcdaf50ab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/textminingapi/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/textminingapi/OPENAI_API_KEY.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/textminingapi/api/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/textminingapi/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/textminingapi/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/textminingapi/OPENAI_API_KEY.env" beforeDir="false" afterPath="$PROJECT_DIR$/textminingapi/OPENAI_API_KEY.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/textminingapi/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/textminingapi/api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/textminingapi/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/textminingapi/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +75,7 @@
       <option name="presentableId" value="Default" />
       <updated>1713944103589</updated>
       <workItem from="1713944104139" duration="1853000" />
+      <workItem from="1714023334176" duration="1806000" />
     </task>
     <servers />
   </component>
